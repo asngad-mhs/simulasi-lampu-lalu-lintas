@@ -1,0 +1,5 @@
+{
+  "name": "Simulasi Lampu Lalu Lintas",
+  "description": "Sebuah landing page interaktif yang mendemonstrasikan simulasi pengendali lampu lalu lintas sederhana menggunakan logika sekuensial yang terinspirasi dari flip-flop. Aplikasi ini memberikan visualisasi real-time dari state machine lampu lalu lintas di persimpangan jalan.",
+  "requestFramePermissions": []
+}
