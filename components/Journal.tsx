@@ -11,14 +11,27 @@ const Journal: React.FC = () => {
 
         <div className="prose prose-invert prose-lg max-w-none text-gray-300 space-y-8">
           <div>
-            <h3 className="text-2xl font-bold text-cyan-400">Pendahuluan</h3>
+            <h3 className="text-2xl font-bold text-cyan-400">1. Pendahuluan</h3>
             <p>
               Lampu lalu lintas adalah pilar fundamental dalam manajemen lalu lintas perkotaan. Di balik operasinya yang tampak sederhana, terdapat sebuah prinsip inti dari ilmu komputer dan elektronika: <strong>logika sekuensial</strong>. Jurnal ini bertujuan untuk membedah bagaimana konsep tersebut, yang secara fisik diwujudkan oleh sirkuit seperti flip-flop, dapat disimulasikan untuk mengendalikan sistem lampu lalu lintas.
             </p>
           </div>
 
           <div>
-            <h3 className="text-2xl font-bold text-cyan-400">Konsep Dasar: Flip-Flop sebagai Memori 1-Bit</h3>
+            <h3 className="text-2xl font-bold text-cyan-400">2. Tinjauan Pustaka</h3>
+            <p>
+              Studi mengenai sistem kendali lalu lintas telah berkembang dari model elektromekanik menuju sistem cerdas. Menurut <strong>Mano & Ciletti (2018)</strong>, sirkuit logika sekuensial adalah fondasi dari sistem digital yang memiliki memori, yang diimplementasikan sebagai <em>Finite State Machine (FSM)</em> untuk aplikasi kontrol sekuensial seperti lampu lalu lintas.
+            </p>
+            <p className="mt-4">
+              Penelitian oleh <strong>Younes & Boufaida (2015)</strong> menyoroti keterbatasan sistem <em>fixed-time</em> konvensional yang tidak responsif terhadap fluktuasi trafik nyata. Mereka mengusulkan sistem adaptif yang menggunakan sensor jaringan nirkabel dan logika fuzzy. Simulasi TrafficSim ini mengadopsi pendekatan serupa secara visual, di mana algoritma "Mode Cerdas" bertindak sebagai agen adaptif yang memantau variabel kepadatan antrian (<em>demand</em>) untuk memodulasi durasi siklus hijau secara dinamis.
+            </p>
+             <p className="mt-4">
+              Konsep dasar ini juga didukung oleh teori kontrol klasik yang dijelaskan oleh <strong>De Césaré & D'Andréa-Novel (1995)</strong>, yang menekankan pentingnya pemodelan koridor lalu lintas untuk optimalisasi arus kendaraan.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-bold text-cyan-400">3. Konsep Dasar: Flip-Flop sebagai Memori 1-Bit</h3>
             <p>
               Jantung dari setiap sistem sekuensial adalah kemampuan untuk "mengingat" informasi dari masa lalu. Di dunia digital, elemen memori terkecil adalah <strong>flip-flop</strong>, sebuah sirkuit yang dapat menyimpan satu bit informasi (nilai 0 atau 1). Ia akan mempertahankan nilainya sampai dipicu oleh sinyal jam (clock signal) untuk beralih ke keadaan baru.
             </p>
@@ -28,7 +41,7 @@ const Journal: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-2xl font-bold text-cyan-400">Membangun Finite State Machine (FSM)</h3>
+            <h3 className="text-2xl font-bold text-cyan-400">4. Membangun Finite State Machine (FSM)</h3>
             <p>
               Dengan merangkai beberapa flip-flop, kita dapat membangun sebuah <strong>Finite State Machine (FSM)</strong>. FSM adalah model matematika yang memiliki jumlah keadaan (state) yang terbatas dan aturan transisi yang jelas antar keadaan tersebut. Siklus lampu lalu lintas adalah contoh FSM yang sempurna:
             </p>
@@ -46,7 +59,7 @@ const Journal: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-2xl font-bold text-cyan-400">Implementasi dalam Kode: Abstraksi Perangkat Keras</h3>
+            <h3 className="text-2xl font-bold text-cyan-400">5. Implementasi dalam Kode: Abstraksi Perangkat Keras</h3>
             <p>
               Meskipun kita tidak mensimulasikan gerbang logika secara individual, array `BASE_SEQUENCE` di komponen `Simulation.tsx` adalah representasi perangkat lunak dari FSM kita:
             </p>
@@ -65,7 +78,7 @@ const Journal: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-2xl font-bold text-cyan-400">Evolusi: Dari Flip-Flop Statis ke AI Adaptif</h3>
+            <h3 className="text-2xl font-bold text-cyan-400">6. Evolusi: Dari Flip-Flop Statis ke AI Adaptif</h3>
             <p>
              Sistem FSM berbasis flip-flop murni bersifat <strong>statis dan deterministik</strong>. Durasinya tetap, tidak peduli apakah jalanan ramai atau sepi. Inilah batasan utama dari "Mode Klasik".
             </p>
@@ -75,7 +88,7 @@ const Journal: React.FC = () => {
           </div>
           
            <div>
-            <h3 className="text-2xl font-bold text-cyan-400">Kesimpulan</h3>
+            <h3 className="text-2xl font-bold text-cyan-400">7. Kesimpulan</h3>
             <p>
              Simulasi ini secara efektif menjembatani kesenjangan antara konsep fundamental elektronika digital dengan aplikasi praktis di dunia nyata. Ini menunjukkan bagaimana prinsip-prinsip sederhana seperti flip-flop dapat diskalakan, diabstraksikan, dan ditingkatkan dengan logika modern untuk menciptakan sistem yang tidak hanya berfungsi, tetapi juga cerdas dan efisien.
             </p>

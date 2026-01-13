@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const ReferenceItem: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
@@ -8,7 +7,7 @@ const ReferenceItem: React.FC<{ href: string; children: React.ReactNode }> = ({ 
     rel="noopener noreferrer"
     className="group block bg-gray-800/50 p-6 rounded-lg border border-gray-700 hover:border-cyan-500 transition-all duration-300 relative cursor-pointer"
   >
-    <blockquote className="text-gray-300 italic">
+    <blockquote className="text-gray-300">
       {children}
     </blockquote>
     <div className="absolute top-4 right-4 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -25,45 +24,42 @@ const References: React.FC = () => {
     <section id="references" className="py-20 bg-gray-800/30">
       <div className="container mx-auto px-6 max-w-4xl">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-cyan-400">Referensi & Daftar Pustaka</h2>
-          <p className="text-gray-400 mt-2">Sumber bacaan lebih lanjut untuk eksplorasi konsep.</p>
+          <h2 className="text-4xl font-bold text-cyan-400">Daftar Pustaka</h2>
+          <p className="text-gray-400 mt-2">Referensi akademis yang digunakan dalam pengembangan simulasi.</p>
         </div>
 
         <div className="space-y-12">
           <div>
-            <h3 className="text-3xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Buku Teks</h3>
-            <div className="space-y-4">
+            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Buku Teks & Jurnal</h3>
+            <div className="space-y-4 font-serif">
               <ReferenceItem href="https://www.google.co.id/books/edition/Digital_Fundamentals/lNo3vgAACAAJ">
-                Floyd, T. L. (2014). <span className="text-cyan-400 not-italic">Digital Fundamentals (11th ed.)</span>. Pearson.
-                <p className="text-sm text-gray-400 mt-2 not-italic">Sebuah buku teks komprehensif yang mencakup semua aspek dasar sirkuit digital, termasuk gerbang logika, flip-flop, dan state machines.</p>
+                <span className="block font-semibold">[1] T. L. Floyd,</span>
+                <span className="italic">Digital Fundamentals</span>, 11th ed. New Jersey: Pearson Education, 2014.
               </ReferenceItem>
+              
               <ReferenceItem href="https://www.google.co.id/books/edition/Digital_Design/P1exDwAAQBAJ">
-                Mano, M. M., & Ciletti, M. D. (2018). <span className="text-cyan-400 not-italic">Digital Design: With an Introduction to the Verilog HDL, VHDL, and SystemVerilog (6th ed.)</span>. Pearson.
-                 <p className="text-sm text-gray-400 mt-2 not-italic">Referensi klasik yang mendalam tentang desain sirkuit logika kombinasional dan sekuensial.</p>
+                 <span className="block font-semibold">[2] M. M. Mano and M. D. Ciletti,</span>
+                 <span className="italic">Digital Design: With an Introduction to the Verilog HDL, VHDL, and SystemVerilog</span>, 6th ed. Upper Saddle River, NJ: Pearson, 2018.
               </ReferenceItem>
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="text-3xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Jurnal Ilmiah</h3>
-             <div className="space-y-4">
+
               <ReferenceItem href="https://ieeexplore.ieee.org/document/411397">
-                De Césaré, J., & D'Andréa-Novel, B. (1995). <span className="text-cyan-400 not-italic">Modeling and control of a traffic corridor.</span> IEEE Transactions on Automatic Control, 40(9), 1599-1604.
-                 <p className="text-sm text-gray-400 mt-2 not-italic">Contoh penerapan teori kontrol pada sistem lalu lintas, menunjukkan evolusi dari model sederhana ke sistem yang lebih kompleks.</p>
+                 <span className="block font-semibold">[3] J. De Césaré and B. D'Andréa-Novel,</span>
+                 "Modeling and control of a traffic corridor," <span className="italic">IEEE Transactions on Automatic Control</span>, vol. 40, no. 9, pp. 1599-1604, Sept. 1995.
               </ReferenceItem>
+
                <ReferenceItem href="https://link.springer.com/article/10.1007/s12652-013-0210-9">
-                Younes, M. B., & Boufaida, Z. (2015). <span className="text-cyan-400 not-italic">An adaptive traffic light control system using wireless sensor networks and fuzzy logic.</span> Journal of Ambient Intelligence and Humanized Computing, 6(1), 115-125.
-                 <p className="text-sm text-gray-400 mt-2 not-italic">Artikel yang relevan dengan "Mode Cerdas", membahas penggunaan sensor dan logika fuzzy (salah satu bentuk AI) untuk kontrol lalu lintas adaptif.</p>
+                 <span className="block font-semibold">[4] M. B. Younes and Z. Boufaida,</span>
+                 "An adaptive traffic light control system using wireless sensor networks and fuzzy logic," <span className="italic">Journal of Ambient Intelligence and Humanized Computing</span>, vol. 6, no. 1, pp. 115-125, 2015.
               </ReferenceItem>
             </div>
           </div>
 
           <div>
-            <h3 className="text-3xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Sumber Online</h3>
-            <div className="space-y-4">
+            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Sumber Pendukung</h3>
+            <div className="space-y-4 font-serif">
               <ReferenceItem href="https://www.allaboutcircuits.com/textbook/digital/chpt-10/sequential-circuits/">
-                All About Circuits. (n.d.). <span className="text-cyan-400 not-italic">Sequential Logic Circuits</span>.
-                <p className="text-sm text-gray-400 mt-2 not-italic">Serangkaian tutorial online gratis yang sangat baik untuk memahami sirkuit sekuensial, termasuk berbagai jenis flip-flop dan aplikasinya.</p>
+                <span className="block font-semibold">[5] All About Circuits,</span>
+                "Sequential Logic Circuits," <span className="italic">All About Circuits Textbook</span>. [Online].
               </ReferenceItem>
             </div>
           </div>
