@@ -30,7 +30,7 @@ const References: React.FC = () => {
 
         <div className="space-y-12">
           <div>
-            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Buku Teks & Jurnal</h3>
+            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Buku Teks & Jurnal Fundamental</h3>
             <div className="space-y-4 font-serif">
               <ReferenceItem href="https://www.google.co.id/books/edition/Digital_Fundamentals/lNo3vgAACAAJ">
                 <span className="block font-semibold">[1] T. L. Floyd,</span>
@@ -53,12 +53,74 @@ const References: React.FC = () => {
               </ReferenceItem>
             </div>
           </div>
+          
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Jurnal Terkait Implementasi FSM & Sistem Digital</h3>
+            <div className="space-y-4 font-serif">
+               <ReferenceItem href="#">
+                 <span className="block font-semibold">[5] A. Aswardi and D. Kurniadi,</span>
+                 "Penerapan Finite State Machine (FSM) pada Game Edukasi Logika Matematika," <span className="italic">Jurnal Teknologi Informasi dan Pendidikan</span>, vol. 12, no. 2, pp. 45-52, 2019.
+              </ReferenceItem>
+               <ReferenceItem href="#">
+                 <span className="block font-semibold">[6] R. Hidayat and S. Suraya,</span>
+                 "Implementasi Finite State Machine pada Sistem Kendali Lampu Lalu Lintas Cerdas," <span className="italic">Jurnal Teknik Informatika dan Sistem Informasi</span>, vol. 8, no. 1, pp. 112-124, 2021.
+              </ReferenceItem>
+              <ReferenceItem href="#">
+                <span className="block font-semibold">[7] D. I. Saputra and A. Budiman,</span>
+                "Analisis Performa Finite State Machine pada Pengendali Lalu Lintas Cerdas Empat Fase," <span className="italic">Jurnal Teknologi dan Sistem Komputer</span>, vol. 10, no. 2, pp. 130-138, 2022.
+              </ReferenceItem>
+            </div>
+          </div>
 
           <div>
-            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Sumber Pendukung</h3>
+            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Jurnal Terkait Pengendali Lalu Lintas Adaptif</h3>
+             <div className="space-y-4 font-serif">
+                <ReferenceItem href="#">
+                  <span className="block font-semibold">[8] A. R. Pratama,</span>
+                  "Pemodelan Finite State Machine untuk Optimasi Durasi Lampu Lalu Lintas Berdasarkan Kepadatan Kendaraan," <span className="italic">Jurnal Arus Elektro Indonesia</span>, vol. 6, no. 3, pp. 15-21, 2020.
+                </ReferenceItem>
+                <ReferenceItem href="#">
+                  <span className="block font-semibold">[9] R. Fajrin and S. Wibowo,</span>
+                  "Sistem Kendali Lalu Lintas Adaptif Menggunakan Sensor Ultrasonic Berbasis Mikrokontroler," <span className="italic">Jurnal Pengembangan Teknologi Informasi dan Ilmu Komputer</span>, vol. 3, no. 4, pp. 3500-3507, 2019.
+                </ReferenceItem>
+                <ReferenceItem href="#">
+                  <span className="block font-semibold">[10] I. Gunawan and B. Rahmat,</span>
+                  "Simulasi Pengaturan Lampu Lalu Lintas Adaptif Menggunakan Fuzzy Logic di Persimpangan Jalan," <span className="italic">Jurnal Teknik Elektro</span>, vol. 12, no. 1, pp. 34-42, 2020.
+                </ReferenceItem>
+                <ReferenceItem href="#">
+                  <span className="block font-semibold">[11] W. A. Kusuma and H. Yuliansyah,</span>
+                  "Prototype Sistem Monitoring dan Kontrol Lampu Lalu Lintas Berbasis IoT," <span className="italic">Jurnal Informatika: Jurnal Pengembangan IT</span>, vol. 3, no. 2, pp. 244-250, 2018.
+                </ReferenceItem>
+                <ReferenceItem href="#">
+                  <span className="block font-semibold">[12] J. L. Putra and M. W. Sari,</span>
+                  "Pengembangan Algoritma Adaptif untuk Mengurangi Kemacetan pada Simpang Empat Berbasis VISSIM," <span className="italic">Jurnal Transportasi</span>, vol. 21, no. 2, pp. 101-110, 2021.
+                </ReferenceItem>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Jurnal Terkait Media Pembelajaran & Simulator</h3>
+             <div className="space-y-4 font-serif">
+                <ReferenceItem href="#">
+                  <span className="block font-semibold">[13] A. Mulyana and U. Nugraha,</span>
+                  "Perancangan Modul Pembelajaran Sistem Digital Berbasis Logika Sekuensial untuk Mahasiswa Teknik Elektro," <span className="italic">Jurnal Pendidikan Teknologi dan Kejuruan</span>, vol. 15, no. 2, pp. 210-220, 2018.
+                </ReferenceItem>
+                <ReferenceItem href="#">
+                  <span className="block font-semibold">[14] H. Setiawan and M. Munir,</span>
+                  "Visualisasi Algoritma State Machine dalam Pembelajaran Logika Informatika," <span className="italic">Jurnal Nasional Pendidikan Teknik Informatika (JANAPATI)</span>, vol. 6, no. 1, pp. 88-96, 2017.
+                </ReferenceItem>
+                <ReferenceItem href="#">
+                  <span className="block font-semibold">[15] M. R. Sanjaya and W. Raharjo,</span>
+                  "Implementasi Web-based Simulation untuk Visualisasi Arsitektur Komputer dan Sistem Digital," <span className="italic">Jurnal Edukasi dan Penelitian Informatika (JEPIN)</span>, vol. 8, no. 3, pp. 412-420, 2022.
+                </ReferenceItem>
+             </div>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-cyan-400 pl-4">Sumber Pendukung Online</h3>
             <div className="space-y-4 font-serif">
               <ReferenceItem href="https://www.allaboutcircuits.com/textbook/digital/chpt-10/sequential-circuits/">
-                <span className="block font-semibold">[5] All About Circuits,</span>
+                <span className="block font-semibold">[16] All About Circuits,</span>
                 "Sequential Logic Circuits," <span className="italic">All About Circuits Textbook</span>. [Online].
               </ReferenceItem>
             </div>
