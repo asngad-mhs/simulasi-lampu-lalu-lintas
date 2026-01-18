@@ -20,11 +20,6 @@ const DetailItem: React.FC<{ title: string; children: React.ReactNode }> = ({ ti
 
 const Features: React.FC = () => {
   const otherFeatures = [
-    {
-      title: 'State Machine',
-      description: 'Inti dari logika lampu lalu lintas. Fitur ini menyoroti bagaimana sistem beroperasi sebagai Finite State Machine (FSM)—sebuah model dengan jumlah **keadaan (state)** yang terbatas dan **transisi** yang terdefinisi dengan jelas. Amati bagaimana setiap fase (mis. \'NS Hijau, EW Merah\') adalah state unik, dan timer bertindak sebagai pemicu untuk transisi ke state berikutnya dalam urutan yang aman.',
-      icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg>
-    },
      {
       title: 'Kontrol Adaptif (AI)',
       description: 'Masuk ke mode cerdas di mana sistem menyesuaikan durasi lampu hijau berdasarkan permintaan lalu lintas yang disimulasikan.',
@@ -75,8 +70,42 @@ const Features: React.FC = () => {
             </div>
         </div>
 
+        {/* Detailed Explanation for State Machine */}
+        <div className="mb-20 bg-gray-800/30 p-8 rounded-2xl border border-gray-700 shadow-xl">
+            <div className="flex items-center mb-6">
+                <div className="text-cyan-400 mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg>
+                </div>
+                <div>
+                    <h3 className="text-3xl font-bold text-white">State Machine: Cetak Biru Operasi</h3>
+                    <p className="text-gray-400">Menguraikan bagaimana sistem beroperasi dengan aturan yang presisi dan aman.</p>
+                </div>
+            </div>
+            <div className="space-y-6">
+                 <DetailItem title='State Encoding (Representasi Biner)'>
+                    Setiap state unik dalam FSM (misalnya, 'NS Hijau') direpresentasikan oleh kombinasi biner unik (contoh: `001`) yang disimpan dalam flip-flop. Ini memungkinkan sirkuit untuk secara pasti mengetahui kondisinya saat ini.
+                </DetailItem>
+                <DetailItem title='Next State Logic (Logika Adaptif)'>
+                    Ini adalah 'otak' FSM. Dalam 'Mode Klasik', logikanya sederhana: `Next State = Current State + Sinyal Clock (Timer)`. Namun, dalam 'Mode AI', logikanya menjadi adaptif: `Next State = Current State + Sinyal Clock + Input (Jumlah Kendaraan)`, mengubah durasi secara dinamis.
+                </DetailItem>
+                <DetailItem title='Moore vs Mealy Machine'>
+                    Simulasi ini beroperasi sebagai <strong>Moore Machine</strong>, di mana output (lampu yang menyala) hanya bergantung pada state saat ini. Ini lebih aman dan dapat diprediksi untuk lampu lalu lintas dibandingkan Mealy Machine, yang outputnya bisa dipengaruhi langsung oleh input.
+                </DetailItem>
+                <DetailItem title='Transition Table (Tabel Kebenaran Sekuensial)'>
+                    Peta yang mendefinisikan setiap transisi. Ia mencatat: Jika sistem berada di `State A`, ia akan selalu pindah ke `State B` setelah timer selesai. Ini adalah cetak biru yang memastikan urutan siklus selalu benar.
+                </DetailItem>
+                 <DetailItem title='Penanganan "Unused States" (Safety Logic)'>
+                    Bagaimana jika terjadi kesalahan dan sistem masuk ke state tidak terdefinisi (misal, NS dan EW hijau)? FSM yang tangguh memiliki 'safety logic' untuk secara otomatis memaksa transisi ke state aman (seperti 'Semua Merah') untuk mencegah kecelakaan.
+                </DetailItem>
+                 <DetailItem title='Ringkasan Konsep untuk Jurnal Anda'>
+                    Tekankan bahwa FSM adalah kerangka kerja formal. Uraikan bagaimana <strong>State Encoding</strong> merepresentasikan kondisi, <strong>Next State Logic</strong> menggerakkan siklus, pemilihan model <strong>Moore</strong> memastikan keamanan, dan <strong>Transition Table</strong> mendefinisikan perilakunya secara presisi.
+                </DetailItem>
+            </div>
+        </div>
+
+
         {/* Other Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {otherFeatures.map((feature, index) => (
             <FeatureCard key={index} {...feature} />
           ))}
