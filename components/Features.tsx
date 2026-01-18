@@ -20,11 +20,6 @@ const DetailItem: React.FC<{ title: string; children: React.ReactNode }> = ({ ti
 
 const Features: React.FC = () => {
   const otherFeatures = [
-     {
-      title: 'Kontrol Adaptif (AI)',
-      description: 'Masuk ke mode cerdas di mana sistem menyesuaikan durasi lampu hijau berdasarkan permintaan lalu lintas yang disimulasikan.',
-      icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6.75h.008v.008h-.008v-.008Zm0 3.75h.008v.008h-.008v-.008Zm0 3.75h.008v.008h-.008v-.008Zm-3.75-3.75h.008v.008h-.008v-.008Zm0 3.75h.008v.008h-.008v-.008Zm-3.75 0h.008v.008h-.008v-.008Z" /></svg>
-    },
     {
       title: 'Visualisasi Real-Time',
       description: 'Lihat perubahan lampu dan antrian kendaraan secara langsung, memberikan pemahaman intuitif tentang durasi dan prioritas setiap fase.',
@@ -103,9 +98,45 @@ const Features: React.FC = () => {
             </div>
         </div>
 
+        {/* Detailed Explanation for Adaptive Control */}
+        <div className="mb-20 bg-gray-800/30 p-8 rounded-2xl border border-gray-700 shadow-xl">
+            <div className="flex items-center mb-6">
+                <div className="text-cyan-400 mr-4">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6.75h.008v.008h-.008v-.008Zm0 3.75h.008v.008h-.008v-.008Zm0 3.75h.008v.008h-.008v-.008Zm-3.75-3.75h.008v.008h-.008v-.008Zm0 3.75h.008v.008h-.008v-.008Zm-3.75 0h.008v.008h-.008v-.008Z" /></svg>
+                </div>
+                <div>
+                    <h3 className="text-3xl font-bold text-white">Kontrol Adaptif (AI): Menuju Sistem Cerdas</h3>
+                    <p className="text-gray-400">Evolusi dari aturan kaku menjadi keputusan dinamis berbasis data.</p>
+                </div>
+            </div>
+            <div className="space-y-6">
+                 <DetailItem title='Parameter Tuning secara Real-Time'>
+                    Inti dari mode AI adalah kemampuan untuk mengubah parameter operasi—dalam kasus ini, `duration` lampu hijau—secara langsung saat sistem berjalan, berdasarkan data yang masuk (jumlah mobil).
+                </DetailItem>
+                <DetailItem title='Konsep Feedback Loop (Umpan Balik)'>
+                    Sistem beroperasi dalam siklus umpan balik berkelanjutan: <strong>1. Mengukur:</strong> "Sensor" menghitung jumlah mobil. <strong>2. Membandingkan:</strong> Algoritma mengevaluasi apakah jumlahnya signifikan. <strong>3. Bertindak:</strong> Durasi lampu hijau diperpanjang. Siklus ini terus berulang.
+                </DetailItem>
+                <DetailItem title='Logika Fuzzy (Fuzzy Logic) dalam Kontrol Adaptif'>
+                    Meskipun tidak diimplementasikan di sini, sistem yang lebih canggih menggunakan Logika Fuzzy untuk menafsirkan input yang tidak pasti (misal, 'agak ramai', 'sangat macet') dan membuat keputusan yang lebih 'manusiawi', tidak hanya biner (0 atau 1).
+                </DetailItem>
+                <DetailItem title='Reinforcement Learning (Pembelajaran Penguatan)'>
+                    Sebagai langkah evolusi berikutnya, agen AI dapat belajar mandiri. Ia akan mencoba berbagai durasi lampu, menerima "hadiah" (reward) untuk pengurangan waktu tunggu dan "hukuman" (punishment) untuk kemacetan, lalu secara bertahap menemukan kebijakan optimal tanpa diprogram secara eksplisit.
+                </DetailItem>
+                 <DetailItem title='Prediksi dan Antisipasi (Proactive Control)'>
+                    Kontrol adaptif yang paling canggih bersifat proaktif, bukan hanya reaktif. Sistem dapat memprediksi lonjakan lalu lintas (misalnya, jam pulang kerja) menggunakan data historis dan menyesuaikan siklus lampu bahkan sebelum kemacetan terjadi.
+                </DetailItem>
+                 <DetailItem title='Perbedaan Utama dalam Tabel'>
+                    <div className="text-sm mt-2">
+                        <p><strong className="text-cyan-300">Mode Klasik:</strong> Logika <strong className="text-cyan-300">statis</strong>, input hanya <strong className="text-cyan-300">waktu</strong>, tujuan adalah <strong className="text-cyan-300">urutan</strong>.</p>
+                        <p><strong className="text-blue-300">Mode AI:</strong> Logika <strong className="text-blue-300">dinamis</strong>, input adalah <strong className="text-blue-300">waktu + kepadatan</strong>, tujuan adalah <strong className="text-blue-300">efisiensi</strong>.</p>
+                    </div>
+                </DetailItem>
+            </div>
+        </div>
+
 
         {/* Other Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="max-w-md mx-auto">
           {otherFeatures.map((feature, index) => (
             <FeatureCard key={index} {...feature} />
           ))}
