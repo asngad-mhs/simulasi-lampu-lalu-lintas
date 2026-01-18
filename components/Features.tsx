@@ -19,14 +19,6 @@ const DetailItem: React.FC<{ title: string; children: React.ReactNode }> = ({ ti
 );
 
 const Features: React.FC = () => {
-  const otherFeatures = [
-    {
-      title: 'Visualisasi Real-Time',
-      description: 'Lihat perubahan lampu dan antrian kendaraan secara langsung, memberikan pemahaman intuitif tentang durasi dan prioritas setiap fase.',
-      icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-    },
-  ];
-
   return (
     <section id="features" className="py-20 bg-gray-900">
       <div className="container mx-auto px-6">
@@ -134,13 +126,41 @@ const Features: React.FC = () => {
             </div>
         </div>
 
-
-        {/* Other Feature Cards */}
-        <div className="max-w-md mx-auto">
-          {otherFeatures.map((feature, index) => (
-            <FeatureCard key={index} {...feature} />
-          ))}
+        {/* Detailed Explanation for Real-Time Visualization */}
+        <div className="mb-20 bg-gray-800/30 p-8 rounded-2xl border border-gray-700 shadow-xl">
+            <div className="flex items-center mb-6">
+                <div className="text-cyan-400 mr-4">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                </div>
+                <div>
+                    <h3 className="text-3xl font-bold text-white">Visualisasi Real-Time: Membuat Logika Terlihat</h3>
+                    <p className="text-gray-400">Menerjemahkan data abstrak menjadi peristiwa yang dapat diamati.</p>
+                </div>
+            </div>
+            <div className="space-y-6">
+                 <DetailItem title='Konsep Dasar: Sinkronisasi Data dan Grafis'>
+                    Visualisasi ini beroperasi pada prinsip <strong>State-Driven UI</strong>. Setiap elemen grafis di layar (lampu, mobil) bukanlah entitas independen, melainkan cerminan langsung dari data state internal aplikasi (misalnya, `currentIndex`, `demand.ns`). Ketika data berubah, grafis secara otomatis diperbarui.
+                </DetailItem>
+                <DetailItem title='Komponen Terpenting Visualisasi'>
+                    <ul className="list-disc list-inside space-y-1 pl-2">
+                        <li><strong>Lampu Lalu Lintas:</strong> Komponen `TrafficLightPole` menerima `state` (MERAH/KUNING/HIJAU) sebagai properti dan mengubah warnanya.</li>
+                        <li><strong>Antrian Kendaraan:</strong> Jumlah mobil yang ditampilkan di jalur Utara-Selatan diikat langsung ke nilai `demand.ns`.</li>
+                        <li><strong>Aliran Kendaraan:</strong> Animasi gerak dipicu saat sebuah "unit" data dipindahkan dari state `demand` ke state `departingCars`.</li>
+                        <li><strong>Dashboard:</strong> Teks seperti 'Logika 0' atau 'Logika 1' adalah hasil dari fungsi yang membaca state saat ini dan mengembalikan string deskriptif.</li>
+                    </ul>
+                </DetailItem>
+                <DetailItem title='Manfaat Pedagogis (Sebagai Media Pembelajaran)'>
+                    Visualisasi menjembatani kesenjangan antara teori abstrak FSM dengan dampak dunia nyata. Mahasiswa dapat secara intuitif memahami konsep seperti "state transition" (saat lampu berganti) dan "queueing" (antrian mobil) hanya dengan mengamati simulasi, memperkuat pemahaman teoritis.
+                </DetailItem>
+                <DetailItem title='Implementasi Teknologi di Web'>
+                    Ini dimungkinkan oleh sifat <strong>reaktif</strong> dari React.js. Ketika sebuah variabel state (didefinisikan dengan `useState`) diperbarui—misalnya, `setCurrentIndex` dipanggil—React secara efisien menghitung ulang UI dan hanya merender ulang komponen yang terpengaruh. Animasi dikelola oleh CSS (`@keyframes`), yang dipicu dengan menambahkan kelas secara dinamis.
+                </DetailItem>
+                <DetailItem title='Ringkasan Konsep'>
+                    Visualisasi bukan sekadar hiasan, melainkan representasi data FSM yang akurat dan sinkron. Ini adalah alat diagnostik dan pendidikan yang kuat, mengubah variabel dan angka yang tak terlihat di dalam kode menjadi sistem lalu lintas yang hidup dan dapat dipahami.
+                </DetailItem>
+            </div>
         </div>
+
       </div>
     </section>
   );
