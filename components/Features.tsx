@@ -13,13 +13,13 @@ const Features: React.FC = () => {
   const features = [
     {
       title: 'Logika Sekuensial',
-      description: 'Amati bagaimana sistem mengingat keadaan sebelumnya untuk menentukan keadaan berikutnya, inti dari sirkuit flip-flop.',
+      description: 'Pelajari fondasi sirkuit digital: Flip-flop sebagai sel memori 1-bit yang menyimpan "state" (keadaan). Amati bagaimana sinyal "clock" mengatur transisi antar state, yang merupakan dasar dari Finite State Machine (FSM) untuk menciptakan urutan yang logis.',
       icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.092 1.21-.138 2.43-.138 3.662v.513a5.035 5.035 0 0 0 1.558 3.787a5.035 5.035 0 0 0 3.787 1.558h.513c1.232 0 2.453.046 3.662.138a4.006 4.006 0 0 0 3.7 3.7 48.678 48.678 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.092-1.21.138-2.43.138-3.662v-.513a5.035 5.035 0 0 0-1.558-3.787a5.035 5.035 0 0 0-3.787-1.558h-.513Z" /></svg>
     },
     {
       title: 'State Machine',
       description: 'Visualisasikan siklus keadaan (merah, kuning, hijau) yang membentuk sebuah finite state machine (FSM) sederhana dan teratur.',
-      icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg>
+      icon: <svg xmlns="http://www.w.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg>
     },
      {
       title: 'Kontrol Adaptif (AI)',
