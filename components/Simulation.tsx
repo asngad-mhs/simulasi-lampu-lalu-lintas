@@ -12,83 +12,103 @@ const BASE_SEQUENCE = [
 ];
 
 const styles = `
+  .sim-background {
+    background-color: #0a192f;
+    background-image: 
+      linear-gradient(rgba(30, 144, 255, 0.3) 1px, transparent 1px), 
+      linear-gradient(90deg, rgba(30, 144, 255, 0.3) 1px, transparent 1px);
+    background-size: 2rem 2rem;
+    position: relative;
+  }
   .sim-container {
-    perspective: 1200px;
+    perspective: 1500px;
   }
   .iso-plane {
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
     transform: rotateX(60deg) rotateZ(-45deg);
-    transition: transform 0.5s ease;
   }
   .road {
     position: absolute;
-    background-color: #374151; /* gray-700 */
+    background-color: #2c3e50;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
   }
   .road-ns { width: 30%; height: 100%; top: 0; left: 35%; }
   .road-ew { width: 100%; height: 30%; top: 35%; left: 0; }
   .lane-marking {
     position: absolute;
-    background: #6b7280; /* gray-500 */
+    background: #4a617a;
+    border-style: dashed;
   }
   .crosswalk {
     position: absolute;
-    background: repeating-linear-gradient(90deg, white, white 10px, transparent 10px, transparent 20px);
+    background: repeating-linear-gradient(90deg, #bdc3c7, #bdc3c7 10px, transparent 10px, transparent 20px);
+    opacity: 0.5;
   }
 
   @keyframes drive-across-ns {
     0% { transform: translateY(150px); opacity: 1; }
-    20% { transform: translateY(100px); }
-    80% { transform: translateY(-450px); }
-    100% { transform: translateY(-600px); opacity: 0; }
+    100% { transform: translateY(-450px); opacity: 0; }
   }
   @keyframes drive-across-ew {
     0% { transform: translateX(-150px); opacity: 1; }
-    20% { transform: translateX(-100px); }
-    80% { transform: translateX(450px); }
-    100% { transform: translateX(600px); opacity: 0; }
+    100% { transform: translateX(450px); opacity: 0; }
   }
   .animate-drive-ns { animation: drive-across-ns 4s ease-in-out forwards; }
   .animate-drive-ew { animation: drive-across-ew 4s ease-in-out forwards; }
-
-  .logic-box {
-    border: 1px solid #0891b2; /* cyan-600 */
-    background: rgba(14, 116, 144, 0.1);
-    backdrop-filter: blur(5px);
+  
+  .logic-module {
+    position: absolute;
+    width: 180px;
+    height: 90px;
+    background: rgba(10, 25, 47, 0.8);
+    border: 2px solid #00aaff;
     color: white;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    text-align: center;
-    font-size: 0.75rem;
-    transition: all 0.3s ease;
+    padding: 8px;
+    font-family: monospace;
+    font-size: 12px;
+    transform: rotateX(-60deg) rotateZ(45deg);
+    box-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+    backdrop-filter: blur(5px);
   }
-  .logic-box.active {
-    box-shadow: 0 0 15px rgba(6, 182, 212, 0.7);
-    background: rgba(6, 182, 212, 0.3);
-  }
-  .sensor-ring {
-    border: 2px solid #0891b2;
+  .led-red {
+    width: 8px;
+    height: 8px;
+    background: #5a1e1e;
     border-radius: 50%;
     transition: all 0.3s ease;
+  }
+  .led-red.active {
+    background: #ff4d4d;
+    box-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff4d4d;
+  }
+  .road-sensor {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0, 255, 255, 0.1);
+    border: 2px solid #00aaff;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s;
+    box-shadow: 0 0 15px rgba(0, 170, 255, 0.3);
   }
-  .sensor-ring.active {
-    border-color: #22d3ee; /* cyan-400 */
-    box-shadow: 0 0 15px rgba(34, 211, 238, 0.7);
-    animation: pulse 0.5s ease-out;
+  .road-sensor.active {
+    background: rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 25px rgba(0, 170, 255, 0.8);
   }
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+  .sensor-car-icon {
+    fill: #00aaff;
+    opacity: 0.7;
+    transition: all 0.3s ease;
   }
-  .connector-line {
-    stroke-width: 2;
-    transition: stroke 0.3s ease;
+  .road-sensor.active .sensor-car-icon {
+    fill: #8effff;
+    opacity: 1;
+    filter: drop-shadow(0 0 5px #8effff);
   }
 `;
 
@@ -104,31 +124,56 @@ const IsometricCar: React.FC<{ color: string; rotation: number; }> = ({ color, r
   </div>
 );
 
+const SensorCarIcon = () => (
+    <svg viewBox="0 0 24 24" className="w-8 h-8 sensor-car-icon">
+        <path d="M6 16.5V13.3333C6 12.4223 6.421 11.5883 7.11111 11.0556L10 9H14L16.8889 11.0556C17.579 11.5883 18 12.4223 18 13.3333V16.5M6 16.5C5.17157 16.5 4.5 17.1716 4.5 18C4.5 18.8284 5.17157 19.5 6 19.5C6.82843 19.5 7.5 18.8284 7.5 18C7.5 17.1716 6.82843 16.5 6 16.5ZM18 16.5C17.1716 16.5 16.5 17.1716 16.5 18C16.5 18.8284 17.1716 19.5 18 19.5C18.8284 19.5 19.5 18.8284 19.5 18C19.5 17.1716 18.8284 16.5 18 16.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"></path>
+    </svg>
+);
+
+const LogicModule: React.FC<{title: string, statusText: string, isSet: boolean, children?: React.ReactNode, style?: React.CSSProperties}> = ({title, statusText, isSet, children, style}) => (
+    <div className="logic-module" style={style}>
+        <div className="flex justify-between items-start">
+            <div>
+                <div className="font-bold text-cyan-400">{title}</div>
+                <div className="text-green-400">{statusText}</div>
+            </div>
+            <div className={`led-red ${isSet ? 'active' : ''}`}></div>
+        </div>
+        {children}
+    </div>
+);
+
 const Simulation: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
-  const [mode, setMode] = useState<'classic' | 'smart'>('classic');
+  const [mode, setMode] = useState<'smart'>('smart'); // Mode AI default
   const [demand, setDemand] = useState({ a: 0, b: 0 });
   const [departingCarsNS, setDepartingCarsNS] = useState<number[]>([]);
   const [departingCarsEW, setDepartingCarsEW] = useState<number[]>([]);
   const [sensorPulse, setSensorPulse] = useState({ a: false, b: false });
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(prev => prev + 1), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${mins}:${secs}`;
+  };
 
   const activeSequence = useMemo(() => {
-    if (mode === 'classic') return BASE_SEQUENCE;
     return BASE_SEQUENCE.map(seq => {
-      if (seq.name === 'NS_GREEN') return { ...seq, duration: 8000 + Math.min(demand.b * 1500, 7000) };
-      if (seq.name === 'EW_GREEN') return { ...seq, duration: 8000 + Math.min(demand.a * 1500, 7000) };
+      if (seq.name === 'NS_GREEN') return { ...seq, duration: 5000 + Math.min(demand.b * 1500, 7000) };
+      if (seq.name === 'EW_GREEN') return { ...seq, duration: 5000 + Math.min(demand.a * 1500, 7000) };
       return seq;
     });
-  }, [mode, demand.a, demand.b]);
+  }, [demand.a, demand.b]);
 
   const currentSequence = activeSequence[currentIndex];
-  const isFlipFlopASet = mode === 'smart' && demand.a > 0;
-  const isLogicGateActive = mode === 'smart' && (
-      (currentSequence.name === 'EW_GREEN' && demand.a > 0) || 
-      (currentSequence.name === 'NS_GREEN' && demand.b > 0)
-  );
-
+  
   const advanceSequence = useCallback(() => {
     setCurrentIndex(prevIndex => (prevIndex + 1) % activeSequence.length);
   }, [activeSequence.length]);
@@ -148,20 +193,18 @@ const Simulation: React.FC = () => {
           if (prev.b > 0) {
             setDepartingCarsNS(prevCars => [...prevCars, Date.now()]);
             return { ...prev, b: prev.b - 1 };
-          }
-          return prev;
+          } return prev;
         });
-      }, 1000);
+      }, 1200);
     } else if (currentSequence.ew === LightState.GREEN) {
       interval = setInterval(() => {
         setDemand(prev => {
           if (prev.a > 0) {
             setDepartingCarsEW(prevCars => [...prevCars, Date.now()]);
             return { ...prev, a: prev.a - 1 };
-          }
-          return prev;
+          } return prev;
         });
-      }, 1000);
+      }, 1200);
     }
     if (currentSequence.name === 'ALL_RED_1') setDepartingCarsNS([]);
     if (currentSequence.name === 'ALL_RED_2') setDepartingCarsEW([]);
@@ -169,15 +212,33 @@ const Simulation: React.FC = () => {
   }, [currentSequence, isRunning]);
 
   const addDemand = (direction: 'a' | 'b') => {
-    if (demand[direction] < 5) {
+    if (demand[direction] < 4) {
       setDemand(d => ({ ...d, [direction]: d[direction] + 1 }));
       setSensorPulse({ ...sensorPulse, [direction]: true });
       setTimeout(() => setSensorPulse(p => ({ ...p, [direction]: false })), 500);
     }
   };
+  
+  const getActiveTruthTableRow = () => {
+      const isEwGreen = currentSequence.ew === LightState.GREEN;
+      const isNsGreen = currentSequence.ns === LightState.GREEN;
+      if (isEwGreen && demand.a > 0) return 1; // A, sensor active
+      if (isEwGreen && demand.a === 0) return 0; // A, sensor idle
+      if (isNsGreen && demand.a > 0) return 3; // X, other light on but sensor A has demand
+      if (isNsGreen && demand.b > 0) return 2; // B
+      return -1; // No specific state matches
+  };
+  const activeTruthRow = getActiveTruthTableRow();
+
+  const truthTableData = [
+    { input: 'A', sensorA: 0, timer: 10, lightA: 1, lightB: 0},
+    { input: 'A', sensorA: 100, timer: 5, lightA: 1, lightB: 0},
+    { input: 'B', sensorA: 100, timer: 5, lightA: 0, lightB: 1},
+    { input: 'X', sensorA: 100, timer: 5, lightA: 0, lightB: 1},
+  ];
 
   return (
-    <section id="simulation" className="py-20 bg-gray-800/30 overflow-hidden">
+    <section id="simulation" className="py-20 sim-background overflow-hidden">
       <style>{styles}</style>
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
@@ -185,53 +246,57 @@ const Simulation: React.FC = () => {
           <p className="text-gray-400 mt-2">Observasi FSM beraksi melalui visualisasi isometrik.</p>
         </div>
 
-        <div className="flex flex-col xl:flex-row gap-8 items-center justify-center">
-          <div className="w-full xl:w-2/3 relative">
-             <div className="relative w-full aspect-video sim-container">
-                {/* LOGIC DIAGRAM OVERLAY */}
-                <div className="absolute inset-0 z-20 pointer-events-none">
-                    <svg width="100%" height="100%" className="absolute inset-0">
-                        {/* Lines */}
-                        <path d="M20% 70% L 35% 45%" stroke={sensorPulse.a ? '#22d3ee' : '#0891b2'} fill="none" className="connector-line" />
-                        <path d="M80% 70% L 65% 45%" stroke={sensorPulse.b ? '#22d3ee' : '#0891b2'} fill="none" className="connector-line" />
-                        <path d="M35% 35% C 35% 20%, 50% 20%, 50% 25%" stroke={isFlipFlopASet ? '#ef4444' : '#b91c1c'} fill="none" className="connector-line" />
-                        <path d="M65% 35% L 50% 25%" stroke="#22d3ee" fill="none" className="connector-line" />
-                        <path d="M50% 18% V 5%" stroke={isLogicGateActive ? '#22d3ee' : '#0891b2'} fill="none" className="connector-line" />
-                    </svg>
+        <div className="relative w-full aspect-video min-h-[500px] xl:min-h-[700px]">
+            {/* UI Overlays */}
+            <div className="absolute top-0 right-0 bg-black/50 p-2 rounded-md font-mono text-xl text-cyan-300 z-30">{formatTime(time)}</div>
+            <div className="absolute bottom-4 left-4 bg-black/50 p-3 rounded-md text-xs text-cyan-300 z-30 font-mono">
+                <p>Push Button = Car Detect</p>
+                <p>RED LED = Flip-Flop SET</p>
+            </div>
+            <div className="absolute bottom-4 right-4 bg-black/70 p-3 rounded-lg border border-cyan-700 w-full max-w-sm z-30">
+                 <h3 className="text-white font-bold mb-2 text-center font-mono">TRUTH TABLE</h3>
+                 <table className="w-full text-xs text-center font-mono">
+                    <thead className="text-cyan-400">
+                        <tr><th className="p-1">INPUTS</th><th className="p-1">SENSOR A</th><th className="p-1">TIMER</th><th className="p-1" colSpan={2}>LIGHT A B (Green)</th></tr>
+                    </thead>
+                    <tbody>
+                        {truthTableData.map((row, index) => (
+                            <tr key={index} className={`transition-colors duration-300 ${activeTruthRow === index ? 'bg-cyan-500/30' : ''}`}>
+                                <td className="p-1.5 border border-cyan-800">{row.input}</td>
+                                <td className="p-1.5 border border-cyan-800">{row.sensorA}</td>
+                                <td className="p-1.5 border border-cyan-800">{row.timer}</td>
+                                <td className="p-1.5 border border-cyan-800">{row.lightA}</td>
+                                <td className="p-1.5 border border-cyan-800">{row.lightB}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                 </table>
+            </div>
+            
+            <div className="absolute inset-0 sim-container">
+                {/* Logic Modules */}
+                 <LogicModule title="SENSOR A" statusText="DETECT..." isSet={sensorPulse.a} style={{ top: '25%', left: '5%'}} />
+                 <LogicModule title="FLIP-FLOP A" statusText="00:52:0D" isSet={demand.a > 0} style={{ top: '5%', right: '20%'}} />
+                 <LogicModule title="SENSOR B" statusText="DETECT..." isSet={sensorPulse.b} style={{ bottom: '25%', right: '5%'}} />
+                 <LogicModule title="FLIP-FLOP B" statusText="LOGIC GATE" isSet={demand.b > 0} style={{ bottom: '5%', left: '20%'}} >
+                    <svg viewBox="0 0 100 50" className="w-16 mx-auto mt-1"><path d="M20 10 H60 C 80 10, 80 40, 60 40 H20 Z" stroke="#00aaff" strokeWidth="2" fill="none" /><text x="50" y="28" textAnchor="middle" fill="#00aaff" fontSize="12">A</text></svg>
+                 </LogicModule>
 
-                    <div className={`sensor-ring absolute w-24 h-24 left-[20%] top-[70%] -translate-x-1/2 -translate-y-1/2 ${sensorPulse.a ? 'active' : ''}`}>
-                       <div className="logic-box w-20 h-20 flex items-center justify-center">SENSOR A</div>
-                    </div>
-                     <div className={`sensor-ring absolute w-24 h-24 left-[80%] top-[70%] -translate-x-1/2 -translate-y-1/2 ${sensorPulse.b ? 'active' : ''}`}>
-                       <div className="logic-box w-20 h-20 flex items-center justify-center">SENSOR B</div>
-                    </div>
-
-                    <div className={`logic-box absolute w-32 h-14 left-[35%] top-[35%] -translate-x-1/2 -translate-y-1/2 ${isFlipFlopASet ? 'active' : ''}`}>
-                        <div className="font-bold">FLIP-FLOP A</div>
-                        <div className={isFlipFlopASet ? 'text-cyan-300' : 'text-gray-500'}>{isFlipFlopASet ? 'SET' : 'IDLE'}</div>
-                    </div>
-                    <div className="logic-box absolute w-32 h-14 left-[65%] top-[35%] -translate-x-1/2 -translate-y-1/2 active">
-                        <div className="font-bold">FLIP-FLOP B</div>
-                        <div className="text-xs">TIMER IC 555</div>
-                    </div>
-                    <div className={`logic-box absolute w-32 h-14 left-1/2 top-[10%] -translate-x-1/2 -translate-y-1/2 ${isLogicGateActive ? 'active' : ''}`}>
-                        <div className="font-bold">LOGIC GATE</div>
-                        <div>(AND)</div>
-                    </div>
-                </div>
-
-                {/* ISOMETRIC SCENE */}
                 <div className="absolute inset-0 iso-plane">
+                    {/* Roads, Markings etc */}
                     <div className="road road-ns"></div>
                     <div className="road road-ew"></div>
-                    <div className="absolute w-[30%] h-[30%] bg-[#374151] top-[35%] left-[35%]"></div>
-                    {/* Markings */}
-                    <div className="lane-marking absolute w-1 h-full bg-gray-600 left-[49.5%] top-0 border-r-2 border-dashed border-gray-500"></div>
-                    <div className="lane-marking absolute h-1 w-full bg-gray-600 top-[49.5%] left-0 border-t-2 border-dashed border-gray-500"></div>
+                    <div className="absolute w-[30%] h-[30%] bg-[#2c3e50] top-[35%] left-[35%]"></div>
+                    <div className="lane-marking absolute w-1 h-full border-l-4 border-gray-500/50 left-1/2 top-0"></div>
+                    <div className="lane-marking absolute h-1 w-full border-t-4 border-gray-500/50 top-1/2 left-0"></div>
                     <div className="crosswalk w-[30%] h-4 absolute top-[32%] left-[35%]"></div>
                     <div className="crosswalk w-[30%] h-4 absolute top-[65%] left-[35%] rotate-180"></div>
                     <div className="crosswalk w-4 h-[30%] absolute left-[32%] top-[35%]"></div>
                     <div className="crosswalk w-4 h-[30%] absolute left-[65%] top-[35%] rotate-180"></div>
+
+                    {/* On-road Sensors */}
+                    <div className={`road-sensor ${sensorPulse.a ? 'active' : ''}`} style={{top: '42%', left: '15%'}}><SensorCarIcon /></div>
+                    <div className={`road-sensor ${sensorPulse.b ? 'active' : ''}`} style={{top: '15%', left: '42%', transform: 'rotate(90deg)'}}><SensorCarIcon /></div>
 
                     {/* Lights */}
                     <div className="absolute top-[30%] left-[30%]" style={{transform: 'scale(0.3) rotate(90deg)'}}><TrafficLightPole state={currentSequence.ew} /></div>
@@ -241,70 +306,39 @@ const Simulation: React.FC = () => {
                     
                     {/* Cars */}
                     {Array.from({ length: demand.a }).map((_, i) => (
-                        <div key={`ew-q-${i}`} className="absolute w-6 h-12 top-1/2 left-1/2" style={{transform: `translateX(calc(-80px - ${i * 30}px)) translateY(30px)`}}><IsometricCar color="#22d3ee" rotation={0} /></div>
+                        <div key={`ew-q-${i}`} className="absolute w-6 h-12 top-1/2 left-1/2" style={{transform: `translateX(calc(-100px - ${i * 35}px)) translateY(30px)`}}><IsometricCar color="#5dadec" rotation={0} /></div>
                     ))}
                      {Array.from({ length: demand.b }).map((_, i) => (
-                        <div key={`ns-q-${i}`} className="absolute w-6 h-12 top-1/2 left-1/2" style={{transform: `translateY(calc(80px + ${i * 30}px)) translateX(-30px)`}}><IsometricCar color="#38bdf8" rotation={90} /></div>
+                        <div key={`ns-q-${i}`} className="absolute w-6 h-12 top-1/2 left-1/2" style={{transform: `translateY(calc(100px + ${i * 35}px)) translateX(-30px)`}}><IsometricCar color="#5dadec" rotation={90} /></div>
                     ))}
                     {departingCarsEW.map(id => (
-                         <div key={`ew-d-${id}`} className="absolute w-6 h-12 top-1/2 left-1/2 animate-drive-ew" style={{transform: `translateY(30px)`}}><IsometricCar color="#22d3ee" rotation={0} /></div>
+                         <div key={`ew-d-${id}`} className="absolute w-6 h-12 top-1/2 left-1/2 animate-drive-ew" style={{transform: `translateY(30px)`}}><IsometricCar color="#5dadec" rotation={0} /></div>
                     ))}
                     {departingCarsNS.map(id => (
-                         <div key={`ns-d-${id}`} className="absolute w-6 h-12 top-1/2 left-1/2 animate-drive-ns" style={{transform: `translateX(-30px)`}}><IsometricCar color="#38bdf8" rotation={90} /></div>
+                         <div key={`ns-d-${id}`} className="absolute w-6 h-12 top-1/2 left-1/2 animate-drive-ns" style={{transform: `translateX(-30px)`}}><IsometricCar color="#5dadec" rotation={90} /></div>
                     ))}
                 </div>
+                 <svg width="100%" height="100%" className="absolute inset-0 z-10 pointer-events-none" style={{transform: 'scale(1.1) translate(-4%, -4%)'}}>
+                    <path d="M28% 50% C 30% 30%, 65% 20%, 72% 28%" stroke="#00aaff" strokeWidth="2" fill="none" />
+                    <path d="M28% 50% C 35% 65%, 40% 80%, 50% 85%" stroke="#ff4d4d" strokeWidth="2" fill="none" />
+                    <path d="M72% 70% C 65% 80%, 40% 90%, 30% 80%" stroke="#00aaff" strokeWidth="2" fill="none" />
+                    <path d="M50% 85% L 72% 70%" stroke="#33ff33" strokeWidth="2" fill="none" />
+                </svg>
             </div>
           </div>
-          
-          <div className="w-full xl:w-1/3 space-y-4">
-             {/* Truth Table */}
-            <div className="bg-gray-900/50 rounded-lg border border-gray-700 p-4">
-                <h3 className="text-white font-bold mb-3 text-center">Truth Table</h3>
-                <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left">
-                        <thead className="text-xs text-cyan-400 uppercase bg-gray-700/50">
-                            <tr>
-                                <th scope="col" className="px-4 py-2">State</th>
-                                <th scope="col" className="px-4 py-2">NS (B)</th>
-                                <th scope="col" className="px-4 py-2">EW (A)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {BASE_SEQUENCE.map((state, index) => (
-                                <tr key={state.name} className={`border-b border-gray-700 transition-colors duration-300 ${currentIndex === index ? 'bg-cyan-500/20' : ''}`}>
-                                    <td className="px-4 py-1.5 font-mono">{state.name}</td>
-                                    <td className={`px-4 py-1.5 font-bold ${state.ns === 'GREEN' ? 'text-green-400' : state.ns === 'YELLOW' ? 'text-yellow-400' : 'text-red-400'}`}>{state.ns}</td>
-                                    <td className={`px-4 py-1.5 font-bold ${state.ew === 'GREEN' ? 'text-green-400' : state.ew === 'YELLOW' ? 'text-yellow-400' : 'text-red-400'}`}>{state.ew}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+          <div className="flex flex-row justify-center items-center gap-8 mt-8">
+                <div className="text-center">
+                    <button onClick={() => addDemand('a')} className="bg-gray-700 hover:bg-gray-600 border border-cyan-500 text-cyan-300 px-4 py-2 rounded">+ Mobil A (EW)</button>
+                    <p className="text-xs mt-1 text-cyan-400">Antrian: {demand.a}</p>
+                </div>
+                 <button onClick={() => setIsRunning(!isRunning)} className="w-12 h-12 rounded-full flex items-center justify-center bg-cyan-500 hover:bg-cyan-400 text-white shadow-[0_0_15px_rgba(6,182,212,0.5)] transition-all" title={isRunning ? "Jeda" : "Mulai"}>
+                    {isRunning ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z" /></svg> : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" /></svg>}
+                </button>
+                <div className="text-center">
+                    <button onClick={() => addDemand('b')} className="bg-gray-700 hover:bg-gray-600 border border-cyan-500 text-cyan-300 px-4 py-2 rounded">+ Mobil B (NS)</button>
+                    <p className="text-xs mt-1 text-cyan-400">Antrian: {demand.b}</p>
                 </div>
             </div>
-
-            {/* Controls */}
-             <div className="p-4 bg-gray-900/50 rounded-lg border border-gray-700">
-                <h3 className="text-white font-bold text-center mb-3">Kontrol Simulasi</h3>
-                <div className="flex justify-center items-center gap-2 mb-4 text-sm">
-                    <button onClick={() => setMode('classic')} className={`px-3 py-1 rounded transition-colors ${mode === 'classic' ? 'bg-cyan-600 text-white' : 'bg-gray-700 text-gray-400'}`}>Mode Klasik</button>
-                    <button onClick={() => setMode('smart')} className={`px-3 py-1 rounded transition-colors ${mode === 'smart' ? 'bg-cyan-600 text-white' : 'bg-gray-700 text-gray-400'}`}>Mode AI</button>
-                </div>
-                <div className="flex flex-row justify-around items-center gap-2">
-                    <div className="text-center">
-                        <button onClick={() => addDemand('a')} className="bg-gray-700 hover:bg-gray-600 border border-gray-600 text-xs px-3 py-2 rounded disabled:opacity-50" disabled={mode === 'classic'}>+ Mobil A (EW)</button>
-                        <p className="text-xs mt-1 text-cyan-400">Antrian: {demand.a}</p>
-                    </div>
-                     <button onClick={() => setIsRunning(!isRunning)} className="w-10 h-10 rounded-full flex items-center justify-center bg-cyan-500 hover:bg-cyan-400 text-white shadow-[0_0_15px_rgba(6,182,212,0.5)] transition-all" title={isRunning ? "Jeda" : "Mulai"}>
-                        {isRunning ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path fillRule="evenodd" d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z" clipRule="evenodd" /></svg> : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path fillRule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clipRule="evenodd" /></svg>}
-                    </button>
-                    <div className="text-center">
-                        <button onClick={() => addDemand('b')} className="bg-gray-700 hover:bg-gray-600 border border-gray-600 text-xs px-3 py-2 rounded disabled:opacity-50" disabled={mode === 'classic'}>+ Mobil B (NS)</button>
-                        <p className="text-xs mt-1 text-cyan-400">Antrian: {demand.b}</p>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
